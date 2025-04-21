@@ -4,26 +4,21 @@ services:
   app:
     build: .
     ports:
-      - "8080:8181"
+      - "${APP_PORT:-8080}:8080"
     depends_on:
       - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/montrack
-      SPRING_DATASOURCE_USERNAME: montrack_db_owner
-      SPRING_DATASOURCE_PASSWORD: npg_52IiqtjsMRLP
-#    env_file:
+    env_file:
+      - .env
 
   db:
-    image: postgres:15
+    image: postgres:17.4
     container_name: montrack-db
-    environment:
-      POSTGRES_DB: montrack
-      POSTGRES_USER: montrack_db_owner
-      POSTGRES_PASSWORD: npg_52IiqtjsMRLP
+    env_file:
+      - .env
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - montrack-data:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+  montrack-data:

@@ -23,7 +23,7 @@ public class UserRestController {
     return ResponseEntity.ok(addedUser);
   }
 
-  @GetMapping
+  @GetMapping("/")
   public List<User> getAllUser() {
     return userService.getAllUser();
   }

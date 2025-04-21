@@ -1,5 +1,6 @@
 package com.example.montrack.auth.domain.entities;
 
+import com.example.montrack.common.domain.entity.Metadata;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -11,8 +12,7 @@ import org.hibernate.annotations.Filter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users", schema = "public")
-@Filter(name = "deletedAtFilter", condition = "deleted_at is null")
+@Table(name = "users")
 public class User {
 
   @Id
@@ -52,4 +52,8 @@ public class User {
   @NotNull
   @Column(name = "profile_photo", nullable = false)
   private String profile_photo;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "metadata_id", referencedColumnName = "id")
+  private Metadata metadata;
 }
